@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiResponses;
 //http://localhost/vue/swagger-ui.html
 @CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/qna")
 @Api("게시판 컨트롤러  API V1")
 public class BoardController {
 
