@@ -21,13 +21,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@RequestMapping("notice")
 @RequiredArgsConstructor
 @Slf4j
 public class NoticeController {
 	
 	private final NoticeService service;
 	
-	@GetMapping("/notice")
+	@GetMapping
 	public String getList(Model model) throws SQLException {
 		List<Notice> list = service.list();
 		log.debug(">>>list : {}",list);
@@ -36,19 +37,19 @@ public class NoticeController {
 		return "notice/index";
 	}
 	
-	@GetMapping("/notice/write")
+	@GetMapping("/write")
 	public String goWrite() {
 		return "notice/write";
 	}
 	
-	@PostMapping("/notice/write")
+	@PostMapping("/write")
 	public String doWrite(@RequestParam String userid, @RequestParam String subject, @RequestParam String content) throws SQLException {
 		log.debug("id:{}",userid);
 		service.write(userid, subject, content);
 		return "redirect:/notice";
 	}
 	
-	@GetMapping("/notice/{noticeNo}")
+	@GetMapping("/{noticeNo}")
 	public String goView(@PathVariable int noticeNo, Model model) throws SQLException {
 		service.updateHit(noticeNo);
 		log.debug(">>no : {}",noticeNo);
@@ -56,14 +57,14 @@ public class NoticeController {
 		return "notice/view";
 	}
 	
-	@GetMapping("/notice/{noticeNo}/modify")
+	@GetMapping("/{noticeNo}/modify")
 	public String goModify(@PathVariable int noticeNo, Model model) throws SQLException {
 		log.debug(">>no:{}",noticeNo);
 		model.addAttribute("notice", service.view(noticeNo));
 		return "notice/modify";
 	}
 	
-	@PostMapping("/notice/{noticeNo}/modify")
+	@PostMapping("/{noticeNo}/modify")
 	public String doModify(@PathVariable int noticeNo, String subject, String content, HttpSession session) throws SQLException {
 		MemberDto m = (MemberDto) session.getAttribute("user");
 		log.debug(">> modify no:{}",noticeNo);
@@ -72,7 +73,7 @@ public class NoticeController {
 		return "redirect:/notice";
 	}
 	
-	@PostMapping("/notice/{noticeNo}/delete")
+	@PostMapping("/{noticeNo}/delete")
 	public String doDelete(@PathVariable int noticeNo, HttpSession session) throws SQLException {
 		MemberDto m = (MemberDto) session.getAttribute("user");
 		log.debug("sessionUserId : {}", m.getUserId());
