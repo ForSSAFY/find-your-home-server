@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
-@MapperScan(basePackages = { "com.ssafy.vue.*.model.mapper" })
+@MapperScan(basePackages = { "com.ssafy.*.model.mapper" })
 public class DataBaseConfiguration {
 	
 	final ApplicationContext applicationContext;
@@ -40,8 +40,8 @@ public class DataBaseConfiguration {
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean session = new SqlSessionFactoryBean();
 		session.setDataSource(dataSource);
-		session.setMapperLocations(applicationContext.getResources("classpath:mapper/**/*.xml"));
-		session.setTypeAliasesPackage("com.ssafy.vue.*.model");
+		session.setMapperLocations(applicationContext.getResources("classpath:mappers/**/*.xml"));
+		session.setTypeAliasesPackage("com.ssafy.*.model");
 //		session.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis/mybatis-config.xml"));
 		return session.getObject();
 	}
