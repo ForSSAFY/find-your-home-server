@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.springtest.model.dao.DongCodeDao">
+
+	<resultMap type="dongCodeDto" id="basicDongCode">
+		<result column="dongCode" property="dongCode"/>
+		<result column="sidoName" property="sidoName"/>
+		<result column="gugunName" property="gugunName"/>
+		<result column="dongName" property="dongName"/>
+	</resultMap>
+
+	<select id="getSidos"> <!-- List<String> () -->
+		select distinct sidoName 
+		from dongcode 
+		where sidoName is not null
+	</select>
+	
+	<select id="getGuguns" resultType="String"> <!-- List<String> (String sidoName) -->
+		select distinct gugunName 
+		from dongcode 
+		where sidoName = #{sidoName} and gugunName is not null
+	</select>
+	
+	<select id="getDongs" resultType="String"> <!-- List<String> (String sidoName, String gugunName) -->
+		select distinct dongName 
+		from dongcode 
+		where sidoName = #{sidoName} and gugunName = #{gugunName} and dongName is not null
+	</select>
+	
+	<select id="getDongCode" resultType="String"> <!-- String (String sidoName, String gugunName, String dongName) -->
+	    SELECT dongCode
+	    FROM dongcode
+	    WHERE sidoName = #{sidoName}
+	    AND gugunName = #{gugunName}
+	    AND dongName = #{dongName};
+	</select>
+</mapper>
