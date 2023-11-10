@@ -1,21 +1,26 @@
 package com.ssafy.springtest.api.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.springtest.model.dto.MemberDto;
 import com.ssafy.springtest.model.service.MemberService;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 @RequestMapping("/api/user")
+@Slf4j
 public class MemberApiController {
 
     private final MemberService memberService;
@@ -36,7 +41,8 @@ public class MemberApiController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String userId, @RequestParam String pw, HttpSession session) throws Exception {
-        byte[] pwByte = pw.getBytes();
+        log.debug("userId: {}, pw: {}", userId, pw);
+    	byte[] pwByte = pw.getBytes();
         MemberDto user = memberService.login(userId, pwByte);
         if (user == null) {
             return ResponseEntity.status(401).body("Invalid credentials");
@@ -86,6 +92,7 @@ public class MemberApiController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestParam String userId, @RequestParam String username,
                                               @RequestParam String pw, @RequestParam String address, @RequestParam String phone) throws Exception {
+    	log.debug("userId: {}, pw: {}", userId, pw);
         byte[] pwByte = pw.getBytes();
         String salt = memberService.getSalt();
         MemberDto memberDto = new MemberDto().builder()
