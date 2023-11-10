@@ -1,4 +1,4 @@
-package com.ssafy.vue.config;
+package com.ssafy.springtest.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
-@MapperScan(basePackages = { "com.ssafy.*.model.mapper" })
+@MapperScan(basePackages = { "com.ssafy.*.model.dao" })
 public class DataBaseConfiguration {
 	
 	final ApplicationContext applicationContext;
@@ -41,7 +41,7 @@ public class DataBaseConfiguration {
 		SqlSessionFactoryBean session = new SqlSessionFactoryBean();
 		session.setDataSource(dataSource);
 		session.setMapperLocations(applicationContext.getResources("classpath:mappers/**/*.xml"));
-		session.setTypeAliasesPackage("com.ssafy.*.model");
+		session.setTypeAliasesPackage("com.ssafy.*.model.dto");
 //		session.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis/mybatis-config.xml"));
 		return session.getObject();
 	}

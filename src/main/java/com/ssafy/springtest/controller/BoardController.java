@@ -1,4 +1,4 @@
-package com.ssafy.vue.board.controller;
+package com.ssafy.springtest.controller;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.BoardListDto;
-import com.ssafy.vue.board.model.service.BoardService;
+import com.ssafy.springtest.model.dto.BoardDto;
+import com.ssafy.springtest.model.dto.BoardListDto;
+import com.ssafy.springtest.model.service.BoardService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

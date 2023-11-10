@@ -1,4 +1,4 @@
-package com.ssafy.vue.board.model.service;
+package com.ssafy.springtest.model.service;
 
 import java.io.File;
 import java.util.HashMap;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.BoardListDto;
-import com.ssafy.vue.board.model.FileInfoDto;
-import com.ssafy.vue.board.model.mapper.BoardMapper;
+import com.ssafy.springtest.model.dao.BoardMapper;
+import com.ssafy.springtest.model.dto.BoardDto;
+import com.ssafy.springtest.model.dto.BoardListDto;
+import com.ssafy.springtest.model.dto.FileInfoDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {

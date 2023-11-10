@@ -1,4 +1,4 @@
-package com.ssafy.vue.config;
+package com.ssafy.springtest.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebConfiguration implements WebMvcConfigurer {
 
 	@Override

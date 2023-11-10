@@ -36,16 +36,13 @@ public class PriceApiController {
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("sidos", sidos);
         responseData.put("years", years);
-
         String jsonResponse = objectMapper.writeValueAsString(responseData);
-
         return ResponseEntity.ok(jsonResponse);
     }
     
     @GetMapping("/sido")
     public String getSido() throws SQLException, JsonProcessingException {
         List<String> result = priceService.getSidos();
-        // TODO parse to json and return
         String jsonResult = objectMapper.writeValueAsString(result);
         log.info("jsonResult: {}", jsonResult);
         return jsonResult;
@@ -55,7 +52,6 @@ public class PriceApiController {
     public String getGugun(@RequestParam String sido) throws SQLException, JsonProcessingException {
         log.info("[getGugun] sido: {}", sido);
         List<String> result = priceService.getGuguns(sido);
-        // TODO parse to json and return
         String jsonResult = objectMapper.writeValueAsString(result);
         log.info("jsonResult: {}", jsonResult);
         return jsonResult;
@@ -65,7 +61,6 @@ public class PriceApiController {
     public String getDong(@RequestParam String sido, @RequestParam String gugun) throws SQLException, JsonProcessingException {
     	log.info("[getDong] sido: {} gugun : {}", sido, gugun);
         List<String> result = priceService.getDongs(sido, gugun);
-        // TODO parse to json and return
         String jsonResult = objectMapper.writeValueAsString(result);
         log.info("jsonResult: {}", jsonResult);
         return jsonResult;
@@ -83,8 +78,6 @@ public class PriceApiController {
             return "[]";
         }
         List<HouseDealDto> result = priceService.getHouseDeals(sido, gugun, dong, dealYear, dealMonth);
-        // TODO parse to json and return
-        
         String jsonResult = objectMapper.writeValueAsString(result);
         log.info("jsonResult: {}", jsonResult);
         return jsonResult;

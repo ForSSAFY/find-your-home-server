@@ -1,4 +1,4 @@
-package com.ssafy.vue.board.model.mapper;
+package com.ssafy.springtest.model.dao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ssafy.vue.board.model.BoardDto;
-import com.ssafy.vue.board.model.FileInfoDto;
+import com.ssafy.springtest.model.dto.BoardDto;
+import com.ssafy.springtest.model.dto.FileInfoDto;
 
 @Mapper
 public interface BoardMapper {

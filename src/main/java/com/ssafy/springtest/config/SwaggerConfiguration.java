@@ -1,4 +1,4 @@
-package com.ssafy.vue.config;
+package com.ssafy.springtest.config;
 
 import java.util.ArrayList;
 import java.util.List;

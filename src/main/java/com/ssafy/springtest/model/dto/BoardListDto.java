@@ -1,4 +1,4 @@
-package com.ssafy.vue.board.model;
+package com.ssafy.springtest.model.dto;
 
 import java.util.List;
 
