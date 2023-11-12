@@ -14,7 +14,7 @@
 	</resultMap>
 	
 	<resultMap type="boardDto" id="viewArticle" extends="article">
-		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
+		<!-- <collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/> -->
 	</resultMap>
 	
 	<resultMap type="fileInfoDto" id="file">
@@ -64,10 +64,9 @@
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name 
-		from board b, members m
-		where b.user_id = m.user_id
-		and b.article_no = #{articleNo}
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time
+		from board b
+		where b.article_no = #{articleNo}
 	</select>
 	
 	<select id="fileInfoList" resultMap="file">
