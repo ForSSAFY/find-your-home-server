@@ -101,11 +101,12 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping
+	@PutMapping("/{articleno}")
 	public ResponseEntity<String> modifyArticle(
+			@PathVariable("articleno") int articleno,
 			@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto) throws Exception {
 		logger.info("modifyArticle - 호출 {}", boardDto);
-
+		boardDto.setArticleNo(articleno);
 		boardService.modifyArticle(boardDto);
 		return ResponseEntity.ok().build();
 	}
