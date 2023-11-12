@@ -7,7 +7,6 @@
 	<resultMap type="boardDto" id="article">
 		<result column="article_no" property="articleNo"/>
 		<result column="user_id" property="userId"/>
-		<result column="user_name" property="userName"/>
 		<result column="subject" property="subject"/>
 		<result column="content" property="content"/>
 		<result column="hit" property="hit"/>
@@ -52,20 +51,16 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
-		from board b, members m 
-		where b.user_id = m.user_id
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time
+		from board b
 		<include refid="search"></include>
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
 	
-	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+	<select id="getTotalArticleCount" resultType="int">
 		select count(article_no)
 		from board
-		<where>
-			<include refid="search"></include>
-		</where>
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
