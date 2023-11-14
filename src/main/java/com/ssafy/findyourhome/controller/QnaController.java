@@ -1,6 +1,8 @@
 package com.ssafy.findyourhome.controller;
 
 import com.ssafy.findyourhome.domain.Qna;
+import com.ssafy.findyourhome.dto.QnaModifyReq;
+import com.ssafy.findyourhome.dto.QnaWriteReq;
 import com.ssafy.findyourhome.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +27,10 @@ public class QnaController {
     private final String NAME = "[QnaController]";
 
     @PostMapping
-    public ResponseEntity<?> write(@RequestBody Qna qna) {
-        log.info("{} write {}", NAME, qna);
+    public ResponseEntity<?> write(@RequestBody QnaWriteReq dto) {
+        log.info("{} write {}", NAME, dto);
         try {
-            qnaService.write(qna);
+            qnaService.write(dto);
             return new ResponseEntity<Void>(HttpStatus.CREATED);
         } catch (Exception e) {
             return exceptionHandling(e);
@@ -52,19 +54,19 @@ public class QnaController {
     public ResponseEntity<Qna> view(@PathVariable("id") int id) {
         log.info("{} view {}", NAME, id);
         qnaService.increaseViews(id);
-        return new ResponseEntity<Qna>(qnaService.getQna(id), HttpStatus.OK);
+        return new ResponseEntity<>(qnaService.getQna(id), HttpStatus.OK);
     }
 
     @GetMapping("/modify/{id}")
     public ResponseEntity<Qna> modifyForm(@PathVariable("id") int id) {
         log.info("{} modifyForm {}", NAME, id);
-        return new ResponseEntity<Qna>(qnaService.getQna(id), HttpStatus.OK);
+        return new ResponseEntity<>(qnaService.getQna(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> modify(@PathVariable("id") int id, @RequestBody Qna qna) {
-        log.info("{} modify {}", NAME, qna);
-        qnaService.modify(id, new Qna());
+    @PutMapping
+    public ResponseEntity<String> modify(@RequestBody QnaModifyReq dto) {
+        log.info("{} modify {}", NAME, dto);
+        qnaService.modify(dto);
         return ResponseEntity.ok().build();
     }
 

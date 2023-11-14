@@ -17,4 +17,3 @@ create table if not exists `qna`
     constraint `qna_to_user_id_fk`
         foreign key (`user_id`) references `user` (`id`)
 );
-delete from `user` where username = 'ssafy';

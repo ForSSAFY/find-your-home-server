@@ -2,11 +2,13 @@ package com.ssafy.findyourhome.service;
 
 import com.ssafy.findyourhome.dao.QnaDao;
 import com.ssafy.findyourhome.domain.Qna;
+import com.ssafy.findyourhome.dto.QnaModifyReq;
+import com.ssafy.findyourhome.dto.QnaWriteReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -14,8 +16,8 @@ public class QnaService {
 
     private final QnaDao qnaDao;
     
-    public void write(Qna qna) {
-        qnaDao.insert(qna);
+    public void write(QnaWriteReq dto) {
+        qnaDao.insert(dto.toEntity());
     }
 
     public List<Qna> list() {
@@ -23,15 +25,15 @@ public class QnaService {
     }
 
     public void increaseViews(int id) {
-        qnaDao.increaseViews(qnaDao.findById(id));
+        qnaDao.increaseViews(id);
     }
 
     public Qna getQna(int id) {
         return qnaDao.findById(id);
     }
 
-    public void modify(Integer id, Qna qna) {
-        qnaDao.update(id, qna);
+    public void modify(QnaModifyReq dto) {
+        qnaDao.update(dto.toEntity());
     }
 
     public void delete(int id) {
