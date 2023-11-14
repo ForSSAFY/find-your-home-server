@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dao와 namespace 맞추기 -->
+<mapper namespace="com.ssafy.springtest.model.dao.UserInfoDao">
+	<!-- 리턴하면서 column의 이름과 property 이름이 같지 않은 경우가 생김  -->
+	<!-- column은 db, property는 dto -->
+	<resultMap type="userInfo" id="basicUserInfo">
+		<result column="id" property="id"/>
+		<result column="pw" property="pw"/>
+		<result column="position" property="position"/>
+		<result column="usernumber" property="userNumber"/>
+		<result column="name" property="name"/>
+		<result column="rname" property="rname"/>
+		<result column="rclass" property="rclass"/>
+	</resultMap>
+	
+	<select id="selectById" parameterType="String" resultMap="basicUserInfo">
+		select *
+		from userinfo
+		where id = #{id}
+	</select>
+</mapper>

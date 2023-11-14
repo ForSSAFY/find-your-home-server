@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dao와 namespace 맞추기 -->
+<mapper namespace="com.ssafy.springtest.model.dao.NoticeDao">
+	<!-- 리턴하면서 column의 이름과 property 이름이 같지 않은 경우가 생김  -->
+	<!-- column은 db, property는 dto -->
+	<resultMap type="Notice" id="baseNotice">
+		<result column="notice_no" property="noticeNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
+	
+	<insert id="writeNotice" parameterType="notice">
+		insert into board (user_id, subject, content) 
+		values (#{userId}, #{subject}, #{content})
+	</insert>
+	
+	<select id="findNotice" parameterType="int" resultMap="baseNotice">
+		select * 
+		from board 
+		where notice_no = #{userId}
+	</select>
+	
+	
+	<select id="listNotices" resultType="List" resultMap="baseNotice">
+		select * 
+		from board 
+		order by notice_no desc;
+	</select>
+	
+	<update id="updateHit" parameterType="int">
+		update board 
+		set hit = hit + 1 
+		where notice_no = #{noticeNo}
+	</update>
+	
+	<update id="modifyNotice" parameterType="notice">
+		update board 
+		set subject = #{subject}, content = #{content} 
+		where notice_no = #{noticeNo}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete 
+		from board
+		where notice_no = #{noticeNo}
+	</delete>
+</mapper>

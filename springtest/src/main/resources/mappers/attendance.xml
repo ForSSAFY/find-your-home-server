@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dao와 namespace 맞추기 -->
+<mapper namespace="com.ssafy.springtest.model.dao.AttendanceDao">
+	<!-- 리턴하면서 column의 이름과 property 이름이 같지 않은 경우가 생김  -->
+	<!-- column은 db, property는 dto -->
+	<insert id="insert" parameterType="attendance">
+		insert into attendance
+		values (#{ano}, #{userNumber}, #{issueDate}, #{issue});
+	</insert>
+	
+	<select id="search" parameterType="string" resultMap="detailAttend">
+		select u.*, a.*
+		from attendance a join userinfo u using(usernumber)
+		<if test="usernumber">
+			where u.usernumber=#{usernumber}
+		</if>
+	</select>
+	
+	<select id="getAttendanceByAno" parameterType="String" resultMap="detailAttend">
+		select u.*, a.*
+		from attendance a cross join userinfo u
+		on u.usernumber = a.usernumber
+		where a.ano = #{ano}
+	</select>
+	
+	<resultMap type="attendance" id="baseAttend">
+		<result column="ano" property="ano"/>
+		<result column="usernumber" property="userNumber"/>
+		<result column="issuedate" property="issueDate"/>
+		<result column="issue" property="issue"/>
+	</resultMap>
+	
+	<resultMap type="attendance" id="detailAttend" extends="baseAttend">
+		<association property="user" resultMap="com.ssafy.springtest.model.dao.UserInfoDao.basicUserInfo" javaType="userInfo"></association>
+	</resultMap>
+</mapper>
