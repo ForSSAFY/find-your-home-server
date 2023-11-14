@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Qna {

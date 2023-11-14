@@ -9,7 +9,6 @@ import java.util.Collection;
 
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class User implements UserDetails {
