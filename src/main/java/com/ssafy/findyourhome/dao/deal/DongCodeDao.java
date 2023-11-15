@@ -18,7 +18,6 @@ public interface DongCodeDao {
     @Select("SELECT DISTINCT dongName FROM dongcode WHERE sidoName = #{sidoName} AND gugunName = #{gugunName} AND dongName IS NOT NULL")
     List<String> getDongs(String sidoName, String gugunName) throws SQLException;
 
-
     @Select("SELECT dongCode FROM dongcode WHERE sidoName = #{sidoName} AND gugunName = #{gugunName} AND dongName = #{dongName}")
     String getDongCode(String sidoName, String gugunName, String dongName) throws SQLException;
 }

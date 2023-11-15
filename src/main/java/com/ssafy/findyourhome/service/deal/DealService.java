@@ -2,18 +2,21 @@ package com.ssafy.findyourhome.service.deal;
 
 import com.ssafy.findyourhome.dao.deal.DongCodeDao;
 import com.ssafy.findyourhome.dao.deal.HouseDealDao;
+import com.ssafy.findyourhome.dto.deal.DealReq;
 import com.ssafy.findyourhome.dto.deal.HouseDealInfoDto;
-import com.ssafy.findyourhome.dto.deal.HouseDealInfoSimpleDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DealService {
 
 	private final DongCodeDao dongCodeDao;
@@ -40,10 +43,26 @@ public class DealService {
         return list;
     }
 
-    public List<HouseDealInfoDto> getHouseDeals(String sidoName, String gugunName, String dongName, int dealYear, int dealMonth) throws SQLException {
+    public List<HouseDealInfoDto> getHouseDeals(DealReq req) throws SQLException {
+
+        if (req.getYear() == null) {
+            req.setYear(LocalDate.now().getYear());
+        }
+        if (req.getMonth() == null) {
+            req.setMonth(LocalDate.now().getMonth().getValue());
+        }
+        log.info("getHouseDeals");
         List<HouseDealInfoDto> list = new ArrayList<>();
-        String dongCode = dongCodeDao.getDongCode(sidoName, gugunName, dongName);
-        if (dongCode == null) return list;
-        return houseDealDao.findAllByDongCode(new HouseDealInfoSimpleDto(dongCode, dealYear, dealMonth));
+        String dongCode = dongCodeDao.getDongCode(req.getSido(), req.getGugun(), req.getDong());
+        if (req.coordinatesExist()) {
+            log.info("coordinates exist");
+            list = houseDealDao.findAllByCoordinate(req);
+        } else if (dongCode != null) {
+            log.info("dongCode exists");
+            req.setDongCode(dongCode);
+            list = houseDealDao.findAllByDongCode(req);
+        }
+
+        return list;
     }
 }
