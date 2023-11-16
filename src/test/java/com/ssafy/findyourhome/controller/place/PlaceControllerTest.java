@@ -1,8 +1,8 @@
-package com.ssafy.findyourhome.controller.deal;
+package com.ssafy.findyourhome.controller.place;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.findyourhome.dao.deal.HouseDealDao;
-import com.ssafy.findyourhome.dto.deal.HouseInfoRes;
+import com.ssafy.findyourhome.dao.place.PlaceDao;
+import com.ssafy.findyourhome.dto.place.HouseInfoRes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class DealControllerTest {
+class PlaceControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
@@ -34,7 +34,7 @@ class DealControllerTest {
     private WebApplicationContext context;
 
     @Autowired
-    HouseDealDao houseDealDao;
+    PlaceDao placeDao;
 
     @BeforeEach
     public void setMockMvc() {
@@ -59,10 +59,10 @@ class DealControllerTest {
                 .param("minLng", minLng.toString())
                 .param("maxLng", maxLng.toString())
         );
-        
+
         // then
         result.andExpect(status().isOk());
-        List<HouseInfoRes> houseList = houseDealDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
+        List<HouseInfoRes> houseList = placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
         assertThat(houseList.size()).isGreaterThan(0);
     }
 }

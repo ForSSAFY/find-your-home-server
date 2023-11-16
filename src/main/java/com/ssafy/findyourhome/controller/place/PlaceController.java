@@ -1,9 +1,9 @@
-package com.ssafy.findyourhome.controller.deal;
+package com.ssafy.findyourhome.controller.place;
 
-import com.ssafy.findyourhome.dto.deal.DealReq;
-import com.ssafy.findyourhome.dto.deal.HouseDealInfoDto;
-import com.ssafy.findyourhome.dto.deal.HouseInfoRes;
-import com.ssafy.findyourhome.service.deal.DealService;
+import com.ssafy.findyourhome.dto.place.PlaceReq;
+import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
+import com.ssafy.findyourhome.dto.place.HouseInfoRes;
+import com.ssafy.findyourhome.service.place.DealService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,10 +14,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/deal")
+@RequestMapping("/api/place")
 @RequiredArgsConstructor
 @Slf4j
-public class DealController {
+public class PlaceController {
 
     private final DealService dealService;
     private final String NAME = "[DealController]";
@@ -61,7 +61,7 @@ public class DealController {
     }*/
 
     @GetMapping
-    public ResponseEntity<?> getDeals(@RequestBody DealReq req) throws SQLException {
+    public ResponseEntity<?> getDeals(@RequestBody PlaceReq req) throws SQLException {
         log.info("getDeal");
         List<HouseDealInfoDto> result = dealService.getHouseDeals(req);
         return ResponseEntity

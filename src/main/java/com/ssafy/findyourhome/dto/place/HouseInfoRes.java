@@ -1,4 +1,4 @@
-package com.ssafy.findyourhome.dto.deal;
+package com.ssafy.findyourhome.dto.place;
 
 import lombok.*;
 

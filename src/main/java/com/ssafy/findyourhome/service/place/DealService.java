@@ -1,10 +1,9 @@
-package com.ssafy.findyourhome.service.deal;
+package com.ssafy.findyourhome.service.place;
 
-import com.ssafy.findyourhome.dao.deal.DongCodeDao;
-import com.ssafy.findyourhome.dao.deal.HouseDealDao;
-import com.ssafy.findyourhome.dto.deal.DealReq;
-import com.ssafy.findyourhome.dto.deal.HouseDealInfoDto;
-import com.ssafy.findyourhome.dto.deal.HouseInfoRes;
+import com.ssafy.findyourhome.dao.place.PlaceDao;
+import com.ssafy.findyourhome.dto.place.PlaceReq;
+import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
+import com.ssafy.findyourhome.dto.place.HouseInfoRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,19 +19,18 @@ import java.util.List;
 @Slf4j
 public class DealService {
 
-	private final DongCodeDao dongCodeDao;
-    private final HouseDealDao houseDealDao;
+    private final PlaceDao placeDao;
 
     public List<String> getSidos() throws SQLException {
-        return dongCodeDao.getSidos();
+        return placeDao.getSidos();
     }
 
     public List<String> getGuguns(String sidoName) throws SQLException {
-        return dongCodeDao.getGuguns(sidoName);
+        return placeDao.getGuguns(sidoName);
     }
 
     public List<String> getDongs(String sidoName, String gugunName) throws SQLException {
-        return dongCodeDao.getDongs(sidoName, gugunName);
+        return placeDao.getDongs(sidoName, gugunName);
     }
 
     public List<Integer> getYears() {
@@ -44,7 +42,7 @@ public class DealService {
         return list;
     }
 
-    public List<HouseDealInfoDto> getHouseDeals(DealReq req) throws SQLException {
+    public List<HouseDealInfoDto> getHouseDeals(PlaceReq req) throws SQLException {
 
         if (req.getYear() == null) {
             req.setYear(LocalDate.now().getYear());
@@ -54,17 +52,17 @@ public class DealService {
         }
         log.info("getHouseDeals");
         List<HouseDealInfoDto> list = new ArrayList<>();
-        String dongCode = dongCodeDao.getDongCode(req.getSido(), req.getGugun(), req.getDong());
+        String dongCode = placeDao.getDongCode(req.getSido(), req.getGugun(), req.getDong());
         if (dongCode != null) {
             log.info("dongCode exists");
             req.setDongCode(dongCode);
-            list = houseDealDao.findAllByDongCode(req);
+            list = placeDao.findAllByDongCode(req);
         }
 
         return list;
     }
 
     public List<HouseInfoRes> getHouses(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException {
-        return houseDealDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
+        return placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
     }
 }

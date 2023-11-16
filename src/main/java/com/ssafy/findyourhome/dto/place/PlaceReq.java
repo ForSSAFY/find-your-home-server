@@ -1,4 +1,4 @@
-package com.ssafy.findyourhome.dto.deal;
+package com.ssafy.findyourhome.dto.place;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class DealReq {
+public class PlaceReq {
 
     private String sido;
     private String gugun;
