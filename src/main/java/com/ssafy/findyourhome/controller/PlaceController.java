@@ -1,9 +1,7 @@
 package com.ssafy.findyourhome.controller;
 
-import com.ssafy.findyourhome.dto.place.PlaceReq;
-import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
-import com.ssafy.findyourhome.dto.place.HouseInfoRes;
-import com.ssafy.findyourhome.service.DealService;
+import com.ssafy.findyourhome.dto.place.*;
+import com.ssafy.findyourhome.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,12 +17,12 @@ import java.util.List;
 @Slf4j
 public class PlaceController {
 
-    private final DealService dealService;
+    private final PlaceService placeService;
     private final String NAME = "[DealController]";
 
     @GetMapping("/sido")
     public ResponseEntity<?> getSido() throws SQLException {
-        List<String> result = dealService.getSidos();
+        List<String> result = placeService.getSidos();
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);
@@ -33,7 +31,7 @@ public class PlaceController {
     @GetMapping("/gugun")
     public ResponseEntity<?> getGugun(@RequestParam String sido) throws SQLException {
         log.info("{} getGugun by sido({})", NAME, sido);
-        List<String> result = dealService.getGuguns(sido);
+        List<String> result = placeService.getGuguns(sido);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);
@@ -42,7 +40,7 @@ public class PlaceController {
     @GetMapping("/dong")
     public ResponseEntity<?> getDong(@RequestParam String sido, @RequestParam String gugun) throws SQLException {
         log.info("{} getDong by sido({}), gugun({})", NAME, sido, gugun);
-        List<String> result = dealService.getDongs(sido, gugun);
+        List<String> result = placeService.getDongs(sido, gugun);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);
@@ -63,7 +61,7 @@ public class PlaceController {
     @GetMapping
     public ResponseEntity<?> getDeals(@RequestBody PlaceReq req) throws SQLException {
         log.info("getDeal");
-        List<HouseDealInfoDto> result = dealService.getHouseDeals(req);
+        List<HouseDealInfoDto> result = placeService.getHouseDeals(req);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);
@@ -72,9 +70,18 @@ public class PlaceController {
     @GetMapping("/house")
     public ResponseEntity<?> getHouses(@RequestParam Double minLat, @RequestParam Double maxLat, @RequestParam Double minLng, @RequestParam Double maxLng) throws SQLException {
         log.info("getHouse");
-        List<HouseInfoRes> result = dealService.getHouses(minLat, maxLat, minLng, maxLng);
+        List<HouseInfoRes> result = placeService.getHouses(minLat, maxLat, minLng, maxLng);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);
+    }
+
+    @GetMapping("/sidogun")
+    public ResponseEntity<?> getSidoguns(@RequestParam Double minLat, @RequestParam Double maxLat, @RequestParam Double minLng, @RequestParam Double maxLng, @RequestParam Integer level) throws SQLException {
+        log.info("getSidoguns");
+        List<SidogunInfoRes> result = placeService.getSidogunInfos(minLat, maxLat, minLng, maxLng, level);
+        return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(result);
     }
 }

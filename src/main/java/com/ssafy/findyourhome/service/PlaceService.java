@@ -4,6 +4,7 @@ import com.ssafy.findyourhome.dao.PlaceDao;
 import com.ssafy.findyourhome.dto.place.PlaceReq;
 import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
 import com.ssafy.findyourhome.dto.place.HouseInfoRes;
+import com.ssafy.findyourhome.dto.place.SidogunInfoRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class DealService {
+public class PlaceService {
 
     private final PlaceDao placeDao;
 
@@ -64,5 +65,21 @@ public class DealService {
 
     public List<HouseInfoRes> getHouses(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException {
         return placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
+    }
+
+    public List<SidogunInfoRes> getSidogunInfos(Double minLat, Double maxLat, Double minLng, Double maxLng, Integer level) throws SQLException {
+
+        List<SidogunInfoRes> result;
+        if (level <= 6) {
+            log.info("countHouseDongByCoordinate");
+            result = placeDao.countHouseDongByCoordinate(minLat, maxLat, minLng, maxLng);
+        } else if (level <= 10) {
+            log.info("countHouseGunguByCoordinate");
+            result = placeDao.countHouseGunguByCoordinate(minLat, maxLat, minLng, maxLng);
+        } else {
+            log.info("countHouseSidoByCoordinate");
+            result = placeDao.countHouseSidoByCoordinate(minLat, maxLat, minLng, maxLng);
+        }
+        return result;
     }
 }
