@@ -35,11 +35,12 @@ public interface PlaceDao {
     @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (lat2 BETWEEN #{minLat} AND #{maxLat}) AND lng2 BETWEEN #{minLng} AND #{maxLng})")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT sigunguCode, dongName, COUNT(sigunguCode) AS cnt\n" +
+    @Select("SELECT DISTINCT sigunguCode AS id, SUBSTRING_INDEX(dongName, ' ', 1) AS name, COUNT(sigunguCode) AS cnt\n" +
             "FROM sigungu\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
-            "GROUP BY sigunguCode, dongName\n" +
+            "AND dongName IS NOT NULL\n" +
+            "GROUP BY sigunguCode, SUBSTRING_INDEX(dongName, ' ', 1)\n" +
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseDongByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
@@ -47,6 +48,7 @@ public interface PlaceDao {
             "FROM sigungu\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            "AND gugunName IS NOT NULL\n" +
             "GROUP BY sigunCode, gugunName\n" +
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseGunguByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
@@ -55,6 +57,7 @@ public interface PlaceDao {
             "FROM sigungu\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            "AND sidoName IS NOT NULL\n" +
             "GROUP BY siCode, sidoName\n" +
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseSidoByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
