@@ -1,7 +1,7 @@
 package com.ssafy.findyourhome.controller.place;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.findyourhome.dao.place.PlaceDao;
+import com.ssafy.findyourhome.dao.PlaceDao;
 import com.ssafy.findyourhome.dto.place.HouseInfoRes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -2,11 +2,10 @@ package com.ssafy.findyourhome.service;
 
 import com.ssafy.findyourhome.dao.QnaDao;
 import com.ssafy.findyourhome.domain.Qna;
-import com.ssafy.findyourhome.dto.QnaModifyReq;
-import com.ssafy.findyourhome.dto.QnaWriteReq;
+import com.ssafy.findyourhome.dto.qna.QnaModifyReq;
+import com.ssafy.findyourhome.dto.qna.QnaWriteReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

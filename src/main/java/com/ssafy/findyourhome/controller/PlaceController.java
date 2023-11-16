@@ -1,9 +1,9 @@
-package com.ssafy.findyourhome.controller.place;
+package com.ssafy.findyourhome.controller;
 
 import com.ssafy.findyourhome.dto.place.PlaceReq;
 import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
 import com.ssafy.findyourhome.dto.place.HouseInfoRes;
-import com.ssafy.findyourhome.service.place.DealService;
+import com.ssafy.findyourhome.service.DealService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

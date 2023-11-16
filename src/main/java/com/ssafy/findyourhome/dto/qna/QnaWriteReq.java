@@ -1,19 +1,22 @@
-package com.ssafy.findyourhome.dto;
+package com.ssafy.findyourhome.dto.qna;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.findyourhome.domain.Qna;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class QnaModifyReq {
-    private Integer id;
+public class QnaWriteReq {
+
+    private Integer userId;
     private String title;
     private String content;
 
     public Qna toEntity() {
         return Qna.builder()
-                .id(id)
+                .userId(userId)
                 .title(title)
                 .content(content)
                 .build();

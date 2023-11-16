@@ -2,7 +2,7 @@ package com.ssafy.findyourhome.service;
 
 import com.ssafy.findyourhome.dao.UserDao;
 import com.ssafy.findyourhome.domain.User;
-import com.ssafy.findyourhome.dto.RegisterReq;
+import com.ssafy.findyourhome.dto.user.RegisterReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

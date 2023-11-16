@@ -1,4 +1,4 @@
-package com.ssafy.findyourhome.dao.place;
+package com.ssafy.findyourhome.dao;
 
 import com.ssafy.findyourhome.dto.place.PlaceReq;
 import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;

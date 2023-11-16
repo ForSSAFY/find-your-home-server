@@ -1,8 +1,8 @@
 package com.ssafy.findyourhome.controller;
 
 import com.ssafy.findyourhome.domain.Qna;
-import com.ssafy.findyourhome.dto.QnaModifyReq;
-import com.ssafy.findyourhome.dto.QnaWriteReq;
+import com.ssafy.findyourhome.dto.qna.QnaModifyReq;
+import com.ssafy.findyourhome.dto.qna.QnaWriteReq;
 import com.ssafy.findyourhome.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController

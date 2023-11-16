@@ -1,6 +1,6 @@
-package com.ssafy.findyourhome.service.place;
+package com.ssafy.findyourhome.service;
 
-import com.ssafy.findyourhome.dao.place.PlaceDao;
+import com.ssafy.findyourhome.dao.PlaceDao;
 import com.ssafy.findyourhome.dto.place.PlaceReq;
 import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
 import com.ssafy.findyourhome.dto.place.HouseInfoRes;

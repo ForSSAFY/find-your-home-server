@@ -1,9 +1,9 @@
-package com.ssafy.findyourhome.dto;
+package com.ssafy.findyourhome.dto.user;
 
 import lombok.Data;
 
 @Data
-public class LoginReq {
+public class RegisterReq {
 
     private String username;
 

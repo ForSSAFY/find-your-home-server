@@ -1,7 +1,7 @@
 package com.ssafy.findyourhome.controller;
 
-import com.ssafy.findyourhome.dto.LoginReq;
-import com.ssafy.findyourhome.dto.RegisterReq;
+import com.ssafy.findyourhome.dto.user.LoginReq;
+import com.ssafy.findyourhome.dto.user.RegisterReq;
 import com.ssafy.findyourhome.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
