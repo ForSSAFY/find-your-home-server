@@ -35,27 +35,27 @@ public interface PlaceDao {
     @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (lat2 BETWEEN #{minLat} AND #{maxLat}) AND lng2 BETWEEN #{minLng} AND #{maxLng})")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT sigunguCode AS id, sidoName, gugunName, dongName, COUNT(sigunguCode) AS cnt\n" +
+    @Select("SELECT DISTINCT sigunguCode, dongName, COUNT(sigunguCode) AS cnt\n" +
             "FROM sigungu\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
-            "GROUP BY sigunguCode, sidoName, gugunName, dongName\n" +
+            "GROUP BY sigunguCode, dongName\n" +
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseDongByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(sigunCode, '000') AS id, sidoName, gugunName, COUNT(sigunguCode) AS cnt\n" +
+    @Select("SELECT DISTINCT CONCAT(sigunCode, '000') AS id, gugunName AS name, COUNT(sigunCode) AS cnt\n" +
             "FROM sigungu\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
-            "GROUP BY sigunCode, sidoName, gugunName\n" +
+            "GROUP BY sigunCode, gugunName\n" +
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseGunguByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(siCode, '000000') AS id, sidoName, COUNT(sigunguCode) AS cnt\n" +
+    @Select("SELECT DISTINCT CONCAT(siCode, '000000') AS id, sidoName AS name, COUNT(siCode) AS cnt\n" +
             "FROM sigungu\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
-            "GROUP BY sigunguCode, sigunCode, siCode, sidoName\n" +
-            "ORDER BY cnt DESC")
+            "GROUP BY siCode, sidoName\n" +
+            "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseSidoByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 }

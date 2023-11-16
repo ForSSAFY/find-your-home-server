@@ -10,9 +10,7 @@ import lombok.*;
 public class SidogunInfoRes {
 
     private String id;
-    private String sidoName;
-    private String gugunName;
-    private String dongName;
+    private String name;
     private int cnt;
 
 }
