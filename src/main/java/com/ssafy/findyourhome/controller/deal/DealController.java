@@ -1,8 +1,8 @@
 package com.ssafy.findyourhome.controller.deal;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssafy.findyourhome.dto.deal.DealReq;
 import com.ssafy.findyourhome.dto.deal.HouseDealInfoDto;
+import com.ssafy.findyourhome.dto.deal.HouseInfoRes;
 import com.ssafy.findyourhome.service.deal.DealService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,9 +61,18 @@ public class DealController {
     }*/
 
     @GetMapping
-    public ResponseEntity<?> getDeal(@RequestBody DealReq req) throws SQLException {
+    public ResponseEntity<?> getDeals(@RequestBody DealReq req) throws SQLException {
         log.info("getDeal");
         List<HouseDealInfoDto> result = dealService.getHouseDeals(req);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(result);
+    }
+
+    @GetMapping("/house")
+    public ResponseEntity<?> getHouses(@RequestParam Double minLat, @RequestParam Double maxLat, @RequestParam Double minLng, @RequestParam Double maxLng) throws SQLException {
+        log.info("getHouse");
+        List<HouseInfoRes> result = dealService.getHouses(minLat, maxLat, minLng, maxLng);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);

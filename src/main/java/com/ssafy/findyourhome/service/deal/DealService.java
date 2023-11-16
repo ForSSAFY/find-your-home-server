@@ -4,6 +4,7 @@ import com.ssafy.findyourhome.dao.deal.DongCodeDao;
 import com.ssafy.findyourhome.dao.deal.HouseDealDao;
 import com.ssafy.findyourhome.dto.deal.DealReq;
 import com.ssafy.findyourhome.dto.deal.HouseDealInfoDto;
+import com.ssafy.findyourhome.dto.deal.HouseInfoRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,15 +55,16 @@ public class DealService {
         log.info("getHouseDeals");
         List<HouseDealInfoDto> list = new ArrayList<>();
         String dongCode = dongCodeDao.getDongCode(req.getSido(), req.getGugun(), req.getDong());
-        if (req.coordinatesExist()) {
-            log.info("coordinates exist");
-            list = houseDealDao.findAllByCoordinate(req);
-        } else if (dongCode != null) {
+        if (dongCode != null) {
             log.info("dongCode exists");
             req.setDongCode(dongCode);
             list = houseDealDao.findAllByDongCode(req);
         }
 
         return list;
+    }
+
+    public List<HouseInfoRes> getHouses(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException {
+        return houseDealDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
     }
 }
