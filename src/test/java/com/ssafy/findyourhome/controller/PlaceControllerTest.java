@@ -1,4 +1,4 @@
-package com.ssafy.findyourhome.controller.place;
+package com.ssafy.findyourhome.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.findyourhome.dao.PlaceDao;
