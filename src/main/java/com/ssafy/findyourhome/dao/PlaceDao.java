@@ -75,8 +75,8 @@ public interface PlaceDao {
             "JOIN (\n" +
             "SELECT SUBSTR(sigunguCode, 1, 2) AS siCode, COUNT(sigunguCode) AS cnt\n" +
             "FROM houseinfo\n" +
-            "WHERE lat BETWEEN 36.4 AND 37.9\n" +
-            "AND lng BETWEEN 126.1 AND 127.9\n" +
+            "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
+            "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
             "GROUP BY SUBSTR(sigunguCode, 1, 2)\n" +
             ") hi\n" +
             "USING (siCode);")

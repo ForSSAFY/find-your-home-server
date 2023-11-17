@@ -71,8 +71,8 @@ public class PlaceService {
 
         List<SidogunInfoRes> result;
         if (level <= 6) {
-            log.info("countHouseDongByCoordinate");
             result = placeDao.countHouseDongByCoordinate(minLat, maxLat, minLng, maxLng);
+            log.info("countHouseDongByCoordinate {}", result.size());
         } else if (level <= 10) {
             log.info("countHouseGunguByCoordinate");
             result = placeDao.countHouseGunguByCoordinate(minLat, maxLat, minLng, maxLng);
