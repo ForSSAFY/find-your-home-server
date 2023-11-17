@@ -35,48 +35,50 @@ public interface PlaceDao {
     @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (lat BETWEEN #{minLat} AND #{maxLat}) AND lng BETWEEN #{minLng} AND #{maxLng})")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT sgg.sigunguCode AS id, SUBSTRING_INDEX(sgg.dongName, ' ', 1) AS name, COUNT(sgg.sigunguCode) AS cnt, AVG(sgg.lat) AS lat, AVG(sgg.lng) as lng\n" +
+    @Select("SELECT sigunguCode AS id, sidoName AS name, lat, lng, cnt\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
-            "WHERE dongName IS NOT NULL) sgg\n" +
+            "WHERE dongName IS NOT NULL\n" +
+            ") sgg\n" +
             "JOIN (\n" +
-            "SELECT *\n" +
+            "SELECT SUBSTR(dongCode, 1, 8) AS sigunguCode, COUNT(sigunguCode) AS cnt\n" +
             "FROM houseinfo\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            "GROUP BY SUBSTR(dongCode, 1, 8)\n" +
             ") hi\n" +
-            "ON sgg.sigunguCode = SUBSTR(hi.dongCode, 1, 8)\n" +
-            "GROUP BY sgg.sigunguCode, SUBSTRING_INDEX(sgg.dongName, ' ', 1)\n" +
-            "ORDER BY cnt DESC;")
+            "USING (sigunguCode);")
     List<SidogunInfoRes> countHouseDongByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(sgg.sigunCode, '000') AS id, SUBSTRING_INDEX(sgg.gugunName, ' ', -1) AS name, COUNT(sgg.sigunCode) AS cnt, AVG(sgg.lat) AS lat, AVG(sgg.lng) as lng\n" +
+    @Select("SELECT sigunguCode AS id, gugunName AS name, lat, lng, cnt\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
-            "WHERE gugunName IS NOT NULL) sgg\n" +
+            "WHERE gugunName IS NOT NULL\n" +
+            "AND dongName IS NULL\n" +
+            ") sgg\n" +
             "JOIN (\n" +
-            "SELECT *\n" +
+            "SELECT sigunguCode AS sigunCode, COUNT(sigunguCode) AS cnt\n" +
             "FROM houseinfo\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            "GROUP BY sigunguCode\n" +
             ") hi\n" +
-            "ON sgg.sigunCode = SUBSTR(hi.dongCode, 1, 5)\n" +
-            "GROUP BY sgg.sigunCode, sgg.gugunName\n" +
-            "ORDER BY cnt DESC;")
+            "USING (sigunCode);")
     List<SidogunInfoRes> countHouseGunguByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(sgg.siCode, '000000') AS id, SUBSTRING_INDEX(sgg.sidoName, ' ', 1) AS name, COUNT(sgg.siCode) AS cnt, AVG(sgg.lat) AS lat, AVG(sgg.lng) as lng\n" +
+    @Select("SELECT CONCAT(siCode, '000000') AS id, sidoName AS name, lat, lng, cnt\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
-            "WHERE sidoName IS NOT NULL) sgg\n" +
+            "WHERE gugunName IS NULL\n" +
+            "AND dongName IS NULL\n" +
+            ") sgg\n" +
             "JOIN (\n" +
-            "SELECT *\n" +
+            "SELECT SUBSTR(sigunguCode, 1, 2) AS siCode, COUNT(sigunguCode) AS cnt\n" +
             "FROM houseinfo\n" +
-            "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
-            "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            "WHERE lat BETWEEN 36.4 AND 37.9\n" +
+            "AND lng BETWEEN 126.1 AND 127.9\n" +
+            "GROUP BY SUBSTR(sigunguCode, 1, 2)\n" +
             ") hi\n" +
-            "ON sgg.siCode = SUBSTR(hi.dongCode, 1, 2)\n" +
-            "GROUP BY sgg.siCode, sgg.sidoName\n" +
-            "ORDER BY cnt DESC;")
+            "USING (siCode);")
     List<SidogunInfoRes> countHouseSidoByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 }
