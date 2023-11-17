@@ -32,7 +32,7 @@ public interface PlaceDao {
 //    List<HouseDealInfoDto> findAllByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
 //    @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (CAST(lat AS DOUBLE) BETWEEN #{minLat} AND #{maxLat}) AND (CAST(lng AS DOUBLE) BETWEEN #{minLng} AND #{maxLng})")
-    @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (lat BETWEEN #{minLat} AND #{maxLat}) AND (lng BETWEEN #{minLng} AND #{maxLng})")
+    @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfoold WHERE (lat BETWEEN #{minLat} AND #{maxLat}) AND (lng BETWEEN #{minLng} AND #{maxLng})")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
     @Select("SELECT sigunguCode AS id, dongName AS name, lat, lng, cnt\n" +
@@ -42,7 +42,7 @@ public interface PlaceDao {
             ") sgg\n" +
             "JOIN (\n" +
             "SELECT SUBSTR(dongCode, 1, 8) AS sigunguCode, COUNT(sigunguCode) AS cnt\n" +
-            "FROM houseinfo\n" +
+            "FROM houseinfoold\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
             "GROUP BY SUBSTR(dongCode, 1, 8)\n" +
@@ -58,7 +58,7 @@ public interface PlaceDao {
             ") sgg\n" +
             "JOIN (\n" +
             "SELECT sigunguCode AS sigunCode, COUNT(sigunguCode) AS cnt\n" +
-            "FROM houseinfo\n" +
+            "FROM houseinfoold\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
             "GROUP BY sigunguCode\n" +
@@ -74,7 +74,7 @@ public interface PlaceDao {
             ") sgg\n" +
             "JOIN (\n" +
             "SELECT SUBSTR(sigunguCode, 1, 2) AS siCode, COUNT(sigunguCode) AS cnt\n" +
-            "FROM houseinfo\n" +
+            "FROM houseinfoold\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
             "GROUP BY SUBSTR(sigunguCode, 1, 2)\n" +

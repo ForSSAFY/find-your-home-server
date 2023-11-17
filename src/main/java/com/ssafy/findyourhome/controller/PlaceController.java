@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/place")
@@ -80,8 +82,23 @@ public class PlaceController {
     public ResponseEntity<?> getSidoguns(@RequestParam Double minLat, @RequestParam Double maxLat, @RequestParam Double minLng, @RequestParam Double maxLng, @RequestParam Integer level) throws SQLException {
         log.info("getSidoguns");
         List<SidogunInfoRes> result = placeService.getSidogunInfos(minLat, maxLat, minLng, maxLng, level);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("level", nextLevel(level));
+        response.put("result", result);
+
         return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(result);
+                .status(HttpStatus.OK)
+                .body(response);
+    }
+
+    private int nextLevel(int level) {
+        if (level <= 6) {
+            return 4;
+        } else if (level <= 10) {
+            return 6;
+        } else {
+            return 10;
+        }
     }
 }
