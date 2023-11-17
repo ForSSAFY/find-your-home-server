@@ -50,7 +50,7 @@ public interface PlaceDao {
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseDongByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(sgg.sigunCode, '000') AS id, SUBSTRING_INDEX(sgg.gugunName, ' ', 1) AS name, COUNT(sgg.sigunCode) AS cnt\n" +
+    @Select("SELECT DISTINCT CONCAT(sgg.sigunCode, '000') AS id, SUBSTRING_INDEX(sgg.gugunName, ' ', -1) AS name, COUNT(sgg.sigunCode) AS cnt\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
             "WHERE gugunName IS NOT NULL) sgg\n" +
