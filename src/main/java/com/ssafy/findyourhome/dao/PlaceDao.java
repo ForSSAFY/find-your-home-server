@@ -35,7 +35,7 @@ public interface PlaceDao {
     @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (lat BETWEEN #{minLat} AND #{maxLat}) AND lng BETWEEN #{minLng} AND #{maxLng})")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT sigunguCode AS id, sidoName AS name, lat, lng, cnt\n" +
+    @Select("SELECT sigunguCode AS id, dongName AS name, lat, lng, cnt\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
             "WHERE dongName IS NOT NULL\n" +
