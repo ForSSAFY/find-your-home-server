@@ -12,5 +12,7 @@ public class SidogunInfoRes {
     private String id;
     private String name;
     private int cnt;
+    private double lat;
+    private double lng;
 
 }
