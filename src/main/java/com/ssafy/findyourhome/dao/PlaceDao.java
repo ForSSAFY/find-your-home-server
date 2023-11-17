@@ -35,7 +35,7 @@ public interface PlaceDao {
     @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (lat BETWEEN #{minLat} AND #{maxLat}) AND lng BETWEEN #{minLng} AND #{maxLng})")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT sgg.sigunguCode AS id, SUBSTRING_INDEX(sgg.dongName, ' ', 1) AS name, COUNT(sgg.sigunguCode) AS cnt, MIN(lat) AS lat, MIN(lng) as lng\n" +
+    @Select("SELECT DISTINCT sgg.sigunguCode AS id, SUBSTRING_INDEX(sgg.dongName, ' ', 1) AS name, COUNT(sgg.sigunguCode) AS cnt, AVG(sgg.lat) AS lat, AVG(sgg.lng) as lng\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
             "WHERE dongName IS NOT NULL) sgg\n" +
@@ -50,7 +50,7 @@ public interface PlaceDao {
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseDongByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(sgg.sigunCode, '000') AS id, SUBSTRING_INDEX(sgg.gugunName, ' ', -1) AS name, COUNT(sgg.sigunCode) AS cnt, MIN(lat) AS lat, MIN(lng) as lng\n" +
+    @Select("SELECT DISTINCT CONCAT(sgg.sigunCode, '000') AS id, SUBSTRING_INDEX(sgg.gugunName, ' ', -1) AS name, COUNT(sgg.sigunCode) AS cnt, AVG(sgg.lat) AS lat, AVG(sgg.lng) as lng\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
             "WHERE gugunName IS NOT NULL) sgg\n" +
@@ -65,7 +65,7 @@ public interface PlaceDao {
             "ORDER BY cnt DESC;")
     List<SidogunInfoRes> countHouseGunguByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
-    @Select("SELECT DISTINCT CONCAT(sgg.siCode, '000000') AS id, SUBSTRING_INDEX(sgg.sidoName, ' ', 1) AS name, COUNT(sgg.siCode) AS cnt, MIN(lat) AS lat, MIN(lng) as lng\n" +
+    @Select("SELECT DISTINCT CONCAT(sgg.siCode, '000000') AS id, SUBSTRING_INDEX(sgg.sidoName, ' ', 1) AS name, COUNT(sgg.siCode) AS cnt, AVG(sgg.lat) AS lat, AVG(sgg.lng) as lng\n" +
             "FROM (\n" +
             "SELECT * FROM sigungu\n" +
             "WHERE sidoName IS NOT NULL) sgg\n" +
