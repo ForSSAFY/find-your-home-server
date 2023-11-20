@@ -51,7 +51,7 @@ class PlaceControllerTest {
         final Double maxLat = 37.50;
         final Double minLng = 127.03;
         final Double maxLng = 127.04;
-
+        final int year = 2018, month = 4;
         // when
         ResultActions result = mockMvc.perform(get(url)
                 .param("minLat", minLat.toString())
@@ -62,7 +62,7 @@ class PlaceControllerTest {
 
         // then
         result.andExpect(status().isOk());
-        List<HouseInfoRes> houseList = placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
+        List<HouseInfoRes> houseList = placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng, year, month);
         assertThat(houseList.size()).isGreaterThan(0);
     }
 }
