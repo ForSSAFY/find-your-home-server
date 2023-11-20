@@ -40,9 +40,9 @@ public interface PlaceDao {
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
             ") hi\n" +
             "USING (apt_code)\n" +
-            "WHERE deal_year = 2018 AND deal_month = 4\n" +
+            "WHERE deal_year = #{dealYear} AND deal_month = #{dealMonth}\n" +
             "GROUP BY apt_code, lat, lng;")
-    List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
+    List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng, int dealYear, int dealMonth) throws SQLException;
 
     @Select("SELECT eubmyundong_code AS id, eubmyundong_name AS name, lat, lng, cnt\n" +
             "FROM (\n" +

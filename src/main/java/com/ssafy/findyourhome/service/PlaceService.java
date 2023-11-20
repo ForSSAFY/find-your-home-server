@@ -64,7 +64,7 @@ public class PlaceService {
     }
 
     public List<HouseInfoRes> getHouses(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException {
-        return placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
+        return placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng, 2018, 4);
     }
 
     public List<SidogunInfoRes> getSidogunInfos(Double minLat, Double maxLat, Double minLng, Double maxLng, Integer level) throws SQLException {
