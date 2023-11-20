@@ -13,4 +13,6 @@ public class HouseInfoRes {
     private Double lat;
     private Double lng;
     private String name;
+    private int price;
+    private String area;
 }

@@ -32,7 +32,16 @@ public interface PlaceDao {
 //    List<HouseDealInfoDto> findAllByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
 //    @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (CAST(lat AS DOUBLE) BETWEEN #{minLat} AND #{maxLat}) AND (CAST(lng AS DOUBLE) BETWEEN #{minLng} AND #{maxLng})")
-    @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfoold WHERE (lat BETWEEN #{minLat} AND #{maxLat}) AND (lng BETWEEN #{minLng} AND #{maxLng})")
+    @Select("SELECT hi.apt_code AS id, hi.apartment_name AS name, hi.lat AS lat, hi.lng AS lng, MAX(deal_amount_int) AS price, MAX(area) AS area\n" +
+            "FROM housedeal \n" +
+            "JOIN  (\n" +
+            "SELECT * FROM houseinfo\n" +
+            "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
+            "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            ") hi\n" +
+            "USING (apt_code)\n" +
+            "WHERE deal_year = 2018 AND deal_month = 4\n" +
+            "GROUP BY apt_code, lat, lng;")
     List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
     @Select("SELECT eubmyundong_code AS id, eubmyundong_name AS name, lat, lng, cnt\n" +
