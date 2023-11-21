@@ -110,4 +110,11 @@ public class PlaceController {
             return 10;
         }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam String keyword) {
+        List<PlaceDto> result = placeService.getPlaces(keyword);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
 }

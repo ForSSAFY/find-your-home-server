@@ -132,4 +132,17 @@ public interface PlaceDao {
             "ORDER BY minutes\n" +
             "LIMIT 1;")
     StoreDto findSubwayNearByHouseId(String type, String id);
+
+    @Select("SELECT 'location' AS type, eubmyundong_name AS name FROM area WHERE eubmyundong_name LIKE #{keyword}")
+    List<PlaceDto> searchLocationByKeyword(String keyword);
+
+    @Select("SELECT 'subway' AS type, name FROM subway WHERE name LIKE #{keyword}")
+    List<PlaceDto> searchSubwayByKeyword(String keyword);
+
+    @Select("SELECT 'apt' AS type, apartment_name AS name, CONCAT(ar.sido_name, ' ', ar.sigungu_name, ' ', ar.eubmyundong_name) AS address\n" +
+            "FROM houseinfo hi\n" +
+            "JOIN area ar\n" +
+            "USING (li_code)\n" +
+            "WHERE apartment_name LIKE #{keyword}")
+    List<PlaceDto> searchAptByKeyword(String keyword);
 }

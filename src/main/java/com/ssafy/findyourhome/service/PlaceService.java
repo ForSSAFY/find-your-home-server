@@ -103,4 +103,25 @@ public class PlaceService {
     }
 
 
+    public List<PlaceDto> getPlaces(String keyword) {
+        List<PlaceDto> response = new ArrayList<>();
+        List<PlaceDto> result;
+        result = placeDao.searchLocationByKeyword(getWildcard(keyword));
+        for (PlaceDto dto : result) {
+            response.add(dto);
+        }
+        result = placeDao.searchSubwayByKeyword(getWildcard(keyword));
+        for (PlaceDto dto : result) {
+            response.add(dto);
+        }
+        result = placeDao.searchAptByKeyword(getWildcard(keyword));
+        for (PlaceDto dto : result) {
+            response.add(dto);
+        }
+        return response;
+    }
+
+    private String getWildcard(String str) {
+        return "%" + str + "%";
+    }
 }
