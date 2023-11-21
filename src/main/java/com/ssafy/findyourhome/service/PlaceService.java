@@ -1,10 +1,7 @@
 package com.ssafy.findyourhome.service;
 
 import com.ssafy.findyourhome.dao.PlaceDao;
-import com.ssafy.findyourhome.dto.place.PlaceReq;
-import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
-import com.ssafy.findyourhome.dto.place.HouseInfoRes;
-import com.ssafy.findyourhome.dto.place.SidogunInfoRes;
+import com.ssafy.findyourhome.dto.place.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -63,8 +60,30 @@ public class PlaceService {
         return list;
     }
 
+    public HouseDetailRes getHouse(String id) {
+
+        HouseInfoRes house = placeDao.findHouseById(id);
+        List<StoreDto> convs = new ArrayList<>();
+        convs.add(placeDao.findSubwayNearByHouseId("subway", id));
+        convs.add(placeDao.findStoreNearByHouseId("store", "G20405", id));
+// placeDao.findStoreNearByHouseId("store", "G20405", id);
+
+        return HouseDetailRes.builder()
+                .id(house.getId())
+                .name(house.getName())
+                .address(house.getAddress())
+                .date(house.getDate())
+                .lat(house.getLat())
+                .lng(house.getLng())
+                .price(house.getPrice())
+                .area(house.getArea())
+                .nearby(convs)
+                .deals(placeDao.findAllDealByHouseId(id))
+                .build();
+    }
+
     public List<HouseInfoRes> getHouses(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException {
-        return placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng, 2018, 4);
+        return placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
     }
 
     public List<SidogunInfoRes> getSidogunInfos(Double minLat, Double maxLat, Double minLng, Double maxLng, Integer level) throws SQLException {
@@ -82,4 +101,6 @@ public class PlaceService {
         }
         return result;
     }
+
+
 }

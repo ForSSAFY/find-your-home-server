@@ -7,9 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class HouseDealInfoSimpleDto {
+public class StoreDto {
 
-    private String date;
-    private int price;
-    private int floor;
+    private String type; // store : G20405
+    private String name;
+    private int minutes;
 }

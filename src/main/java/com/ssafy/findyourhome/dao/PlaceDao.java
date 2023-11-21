@@ -1,9 +1,6 @@
 package com.ssafy.findyourhome.dao;
 
-import com.ssafy.findyourhome.dto.place.PlaceReq;
-import com.ssafy.findyourhome.dto.place.HouseDealInfoDto;
-import com.ssafy.findyourhome.dto.place.HouseInfoRes;
-import com.ssafy.findyourhome.dto.place.SidogunInfoRes;
+import com.ssafy.findyourhome.dto.place.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -32,17 +29,19 @@ public interface PlaceDao {
 //    List<HouseDealInfoDto> findAllByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
 //    @Select("SELECT aptCode as id, lat, lng, apartmentName as name FROM houseinfo WHERE (CAST(lat AS DOUBLE) BETWEEN #{minLat} AND #{maxLat}) AND (CAST(lng AS DOUBLE) BETWEEN #{minLng} AND #{maxLng})")
-    @Select("SELECT hi.apt_code AS id, hi.apartment_name AS name, hi.lat AS lat, hi.lng AS lng, MAX(deal_amount_int) AS price, MAX(area) AS area\n" +
-            "FROM housedeal \n" +
-            "JOIN  (\n" +
-            "SELECT * FROM houseinfo\n" +
+    @Select("select hi.apt_code AS id, hi.apartment_name AS name, hi.lat, hi.lng, hd.deal_amount_int AS price, hd.area AS area\n" +
+            "from (\n" +
+            "    select hi.*, MAX(hd.`no`) max_no\n" +
+            "    from houseinfo hi\n" +
+            "        join housedeal hd\n" +
+            "        on hi.apt_code = hd.apt_code\n" +
             "WHERE lat BETWEEN #{minLat} AND #{maxLat}\n" +
             "AND lng BETWEEN #{minLng} AND #{maxLng}\n" +
+            "    group by hi.apt_code\n" +
             ") hi\n" +
-            "USING (apt_code)\n" +
-            "WHERE deal_year = #{dealYear} AND deal_month = #{dealMonth}\n" +
-            "GROUP BY apt_code, lat, lng;")
-    List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng, int dealYear, int dealMonth) throws SQLException;
+            "join housedeal hd\n" +
+            "on hi.max_no = hd.`no`;")
+    List<HouseInfoRes> findAllHouseByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
 
     @Select("SELECT eubmyundong_code AS id, eubmyundong_name AS name, lat, lng, cnt\n" +
             "FROM (\n" +
@@ -90,4 +89,47 @@ public interface PlaceDao {
             ") hi\n" +
             "USING (sido_code);")
     List<SidogunInfoRes> countHouseSidoByCoordinate(Double minLat, Double maxLat, Double minLng, Double maxLng) throws SQLException;
+
+    @Select("SELECT apt_code AS id, hiar.lat, hiar.lng, apartment_name AS name, hd.deal_amount_int AS price, hd.area, CONCAT(sido_name, ' ', sigungu_name, ' ', eubmyundong_name) AS address, CONCAT(deal_year, '/', deal_month, '/', deal_day) AS date\n" +
+            "FROM (SELECT apt_code, apartment_name, hi.lat, hi.lng, ar.sido_name, ar.sigungu_name, ar.eubmyundong_name FROM houseinfo hi JOIN area ar USING (li_code)) hiar\n" +
+            "JOIN housedeal hd\n" +
+            "USING (apt_code)\n" +
+            "WHERE apt_code = #{id}\n" +
+            "ORDER BY STR_TO_DATE(CONCAT(deal_year, '/', deal_month, '/', deal_day), '%Y/%m/%d') DESC\n" +
+            "LIMIT 1;")
+    HouseInfoRes findHouseById(String id);
+
+    @Select("SELECT CONCAT(deal_year, '/', deal_month, '/', deal_day) AS date, deal_amount_int AS price, CAST(floor AS SIGNED) AS floor\n" +
+            "FROM houseinfo\n" +
+            "JOIN housedeal\n" +
+            "USING (apt_code)\n" +
+            "WHERE apt_code = #{id}\n" +
+            "ORDER BY STR_TO_DATE(CONCAT(deal_year, '/', deal_month, '/', deal_day), '%Y/%m/%d') DESC;")
+    List<HouseDealInfoSimpleDto> findAllDealByHouseId(String id);
+
+
+    @Select("SELECT \n" +
+            "\t#{type} AS type,\n" +
+            "    store_name AS name, \n" +
+            "    ROUND(ST_DISTANCE(\n" +
+            "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
+            "        coordinate\n" +
+            "    ) / 100) AS minutes\n" +
+            "FROM storeinfo\n" +
+            "WHERE business_area_sub_code = #{code}\n" +
+            "ORDER BY minutes\n" +
+            "LIMIT 1;")
+    StoreDto findStoreNearByHouseId(String type, String code, String id);
+
+    @Select("SELECT \n" +
+            "\t#{type} AS type,\n" +
+            "    CONCAT(name, '역') AS name, \n" +
+            "    ROUND(ST_DISTANCE(\n" +
+            "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
+            "        coordinate\n" +
+            "    ) / 100) AS minutes\n" +
+            "FROM subway\n" +
+            "ORDER BY minutes\n" +
+            "LIMIT 1;")
+    StoreDto findSubwayNearByHouseId(String type, String id);
 }

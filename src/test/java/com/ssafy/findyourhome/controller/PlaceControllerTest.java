@@ -62,7 +62,7 @@ class PlaceControllerTest {
 
         // then
         result.andExpect(status().isOk());
-        List<HouseInfoRes> houseList = placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng, year, month);
+        List<HouseInfoRes> houseList = placeDao.findAllHouseByCoordinate(minLat, maxLat, minLng, maxLng);
         assertThat(houseList.size()).isGreaterThan(0);
     }
 }

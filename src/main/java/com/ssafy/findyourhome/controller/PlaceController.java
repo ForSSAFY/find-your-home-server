@@ -71,8 +71,17 @@ public class PlaceController {
 
     @GetMapping("/house")
     public ResponseEntity<?> getHouses(@RequestParam Double minLat, @RequestParam Double maxLat, @RequestParam Double minLng, @RequestParam Double maxLng) throws SQLException {
-        log.info("getHouse");
+        log.info("getHouses");
         List<HouseInfoRes> result = placeService.getHouses(minLat, maxLat, minLng, maxLng);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(result);
+    }
+
+    @GetMapping("/house/{id}")
+    public ResponseEntity<?> getHouse(@PathVariable String id) throws SQLException {
+        log.info("getHouse");
+        HouseDetailRes result = placeService.getHouse(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);
