@@ -17,6 +17,9 @@ public class User implements UserDetails {
 
     private String username;
 
+    private String nickname;
+    private String email;
+
     private String password;
 
     private Timestamp joinDate;

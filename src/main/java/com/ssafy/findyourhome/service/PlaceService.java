@@ -112,6 +112,7 @@ public class PlaceService {
         }
         result = placeDao.searchSubwayByKeyword(getWildcard(keyword));
         for (PlaceDto dto : result) {
+            dto.setName(dto.getName() + "역");
             response.add(dto);
         }
         result = placeDao.searchAptByKeyword(getWildcard(keyword));

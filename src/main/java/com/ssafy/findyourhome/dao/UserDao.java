@@ -19,7 +19,7 @@ public interface UserDao {
     @Select("SELECT * FROM `user`")
     List<User> findAll();
 
-    @Insert("INSERT INTO `user` (username, password) VALUES (#{username}, #{password})")
+    @Insert("INSERT INTO `user` (username, password, nickname, email) VALUES (#{username}, #{password}, #{nickname}, #{email})")
     void insert(User user);
 
     @Update("UPDATE `user` SET password = #{password} WHERE id = #{id}")

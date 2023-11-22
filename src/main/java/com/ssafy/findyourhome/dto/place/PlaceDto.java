@@ -9,7 +9,10 @@ import lombok.*;
 @ToString
 public class PlaceDto {
 
+    private String id;
     private String type;
     private String name;
     private String address;
+    private double lat;
+    private double lng;
 }

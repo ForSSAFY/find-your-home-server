@@ -22,6 +22,8 @@ public class UserService {
 
         User user = User.builder()
                 .username(registerReq.getUsername())
+                .email(registerReq.getEmail())
+                .nickname(registerReq.getNickname())
                 .password(passwordEncoder.encode(registerReq.getPassword()))
                 .build();
         userDao.insert(user);
