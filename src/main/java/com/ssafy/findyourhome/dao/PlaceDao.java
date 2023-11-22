@@ -133,6 +133,30 @@ public interface PlaceDao {
             "LIMIT 1;")
     StoreDto findSubwayNearByHouseId(String type, String id);
 
+    @Select("SELECT \n" +
+            "\t'park' AS type,\n" +
+            "    name, \n" +
+            "    CEIL(ST_DISTANCE(\n" +
+            "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
+            "        coordinate\n" +
+            "    ) / 50) AS minutes\n" +
+            "FROM park\n" +
+            "ORDER BY minutes\n" +
+            "LIMIT 1;")
+    StoreDto findParkNearByHouseId(String id);
+
+    @Select("SELECT \n" +
+            "\t'charger' AS type,\n" +
+            "    name, \n" +
+            "    CEIL(ST_DISTANCE(\n" +
+            "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
+            "        coordinate\n" +
+            "    ) / 400) AS minutes\n" +
+            "FROM echarger\n" +
+            "ORDER BY minutes\n" +
+            "LIMIT 1;")
+    StoreDto findEchargerNearByHouseId(String id);
+
     @Select("SELECT eubmyundong_code AS id, 'location' AS type, eubmyundong_name AS name, CONCAT(sido_name, ' ', sigungu_name) AS address, lat, lng\n" +
             "FROM area\n" +
             "WHERE li_name IS NULL AND eubmyundong_name LIKE #{keyword}")
@@ -147,4 +171,5 @@ public interface PlaceDao {
             "USING (li_code)\n" +
             "WHERE apartment_name LIKE #{keyword}")
     List<PlaceDto> searchAptByKeyword(String keyword);
+
 }

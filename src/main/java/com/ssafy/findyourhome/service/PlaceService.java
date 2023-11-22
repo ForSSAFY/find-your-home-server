@@ -66,6 +66,8 @@ public class PlaceService {
         List<StoreDto> convs = new ArrayList<>();
         convs.add(placeDao.findSubwayNearByHouseId("subway", id));
         convs.add(placeDao.findStoreNearByHouseId("store", "G20405", id));
+        convs.add(placeDao.findParkNearByHouseId(id));
+        convs.add(placeDao.findEchargerNearByHouseId(id));
 // placeDao.findStoreNearByHouseId("store", "G20405", id);
 
         return HouseDetailRes.builder()
