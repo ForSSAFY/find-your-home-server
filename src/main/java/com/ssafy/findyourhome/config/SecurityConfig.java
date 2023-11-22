@@ -34,27 +34,5 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://70.12.103.1:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests((requests) -> requests
-                        .requestMatchers("/api/user/login", "/", "/api/**").permitAll()
-                        .anyRequest().authenticated())
-                .cors((cors) -> cors.disable())
-                .csrf((csrf) -> csrf.disable());
-
-        return http.build();
-    }
-
 
 }
