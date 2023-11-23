@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserDao userDao;
-    private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
     public void register(RegisterReq registerReq) {

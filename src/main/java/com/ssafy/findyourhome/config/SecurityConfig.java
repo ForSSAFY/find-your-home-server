@@ -2,6 +2,7 @@ package com.ssafy.findyourhome.config;
 
 import com.ssafy.findyourhome.filter.AjaxLoginProcessingFilter;
 import com.ssafy.findyourhome.security.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -22,8 +23,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AjaxAccessDeniedHandler ajaxAccessDeniedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -50,23 +54,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AjaxAuthenticationFailureHandler();
     }
 
-    @Bean
-    public AccessDeniedHandler ajaxAccessDeniedHandler() {
-        return new AjaxAccessDeniedHandler();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .antMatcher("/api/**")
                 .authorizeRequests()
-                .antMatchers("/", "/api/user/login", "/api/user/register").permitAll()
+                .antMatchers("/**","/", "/api/user/login", "/api/user/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
-                .accessDeniedHandler(ajaxAccessDeniedHandler())
+                .accessDeniedHandler(ajaxAccessDeniedHandler)
+                .and()
+                .csrf().disable()
         ;
 //        http.csrf().disable();
 
