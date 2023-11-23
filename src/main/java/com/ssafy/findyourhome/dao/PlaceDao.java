@@ -123,7 +123,7 @@ public interface PlaceDao {
 
     @Select("SELECT \n" +
             "\t#{type} AS type,\n" +
-            "    CONCAT(name, '역') AS name, \n" +
+            "    name AS name, \n" +
             "    ROUND(ST_DISTANCE(\n" +
             "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
             "        coordinate\n" +
@@ -162,7 +162,10 @@ public interface PlaceDao {
             "WHERE li_name IS NULL AND eubmyundong_name LIKE #{keyword}")
     List<PlaceDto> searchLocationByKeyword(String keyword);
 
-    @Select("SELECT code AS id, 'subway' AS type, name, lat, lng FROM subway WHERE name LIKE #{keyword}")
+    @Select("SELECT MIN(code) AS id, 'subway' AS type, name, lat, lng\n" +
+            "FROM subway \n" +
+            "WHERE name LIKE #{keyword}\n" +
+            "GROUP BY name, lat, lng;")
     List<PlaceDto> searchSubwayByKeyword(String keyword);
 
     @Select("SELECT hi.apt_code AS id, 'apt' AS type, apartment_name AS name, CONCAT(ar.sido_name, ' ', ar.sigungu_name, ' ', ar.eubmyundong_name) AS address, hi.lat, hi.lng\n" +
