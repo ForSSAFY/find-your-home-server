@@ -68,6 +68,10 @@ public class PlaceService {
         convs.add(placeDao.findStoreNearByHouseId("store", "G20405", id));
         convs.add(placeDao.findParkNearByHouseId(id));
         convs.add(placeDao.findEchargerNearByHouseId(id));
+        for (StoreDto conv :
+                convs) {
+            log.info("getHouse Nearby {}", conv.getName());
+        }
 // placeDao.findStoreNearByHouseId("store", "G20405", id);
 
         return HouseDetailRes.builder()

@@ -18,7 +18,7 @@ public interface QnaDao {
     })
     Qna findById(int id);
 
-    @Select("SELECT * FROM qna")
+    @Select("SELECT * FROM qna ORDER BY created_at DESC")
     @ResultMap("qnaResultMap")
     List<Qna> findAll();
 

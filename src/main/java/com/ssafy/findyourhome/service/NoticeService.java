@@ -16,7 +16,12 @@ public class NoticeService {
     private final NoticeDao noticeDao;
     
     public void write(QnaWriteReq dto) {
-        noticeDao.insert(dto.toEntity());
+        Qna qna = Qna.builder()
+                .userId(1)
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .build();
+        noticeDao.insert(qna);
     }
 
     public List<Qna> list() {

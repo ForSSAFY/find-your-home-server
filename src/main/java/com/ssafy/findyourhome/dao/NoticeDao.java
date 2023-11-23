@@ -10,13 +10,13 @@ import java.util.List;
 @Mapper
 public interface NoticeDao {
 
-    @Select("SELECT * FROM qna WHERE id = #{id}")
+    @Select("SELECT * FROM notice WHERE id = #{id}")
     @Results(id = "qnaResultMap", value = {
             @Result(property = "userId", column = "user_id")
     })
     Qna findById(int id);
 
-    @Select("SELECT * FROM notice")
+    @Select("SELECT * FROM notice ORDER BY created_at DESC")
     @ResultMap("qnaResultMap")
     List<Qna> findAll();
 

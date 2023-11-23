@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatcher("/**")
 //                .cors().and()
                 .authorizeRequests()
-                .antMatchers("/login","/", "/api/user/login", "/api/user/register").permitAll()
+                .antMatchers("/login","/", "/api/**", "/api/user/login", "/api/user/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
 //                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)

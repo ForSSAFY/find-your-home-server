@@ -1,10 +1,12 @@
 package com.ssafy.findyourhome.service;
 
 import com.ssafy.findyourhome.dao.QnaDao;
+import com.ssafy.findyourhome.dao.UserDao;
 import com.ssafy.findyourhome.domain.Qna;
 import com.ssafy.findyourhome.dto.qna.QnaModifyReq;
 import com.ssafy.findyourhome.dto.qna.QnaWriteReq;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +16,15 @@ import java.util.List;
 public class QnaService {
 
     private final QnaDao qnaDao;
-    
+    private final UserDao userDao;
+
     public void write(QnaWriteReq dto) {
-        qnaDao.insert(dto.toEntity());
+        Qna qna = Qna.builder()
+                .userId(1)
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .build();
+        qnaDao.insert(qna);
     }
 
     public List<Qna> list() {

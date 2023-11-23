@@ -145,14 +145,22 @@ public interface PlaceDao {
             "LIMIT 1;")
     StoreDto findParkNearByHouseId(String id);
 
+//    @Select("SELECT \n" +
+//            "\t'charger' AS type,\n" +
+//            "    name, \n" +
+//            "    CEIL(ST_DISTANCE(\n" +
+//            "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
+//            "        coordinate\n" +
+//            "    ) / 400) AS minutes\n" +
+//            "FROM echarger\n" +
+//            "ORDER BY minutes\n" +
+//            "LIMIT 1;")
     @Select("SELECT \n" +
             "\t'charger' AS type,\n" +
-            "    name, \n" +
-            "    CEIL(ST_DISTANCE(\n" +
-            "        (SELECT coordinate FROM houseinfo WHERE apt_code = #{id}), \n" +
-            "        coordinate\n" +
-            "    ) / 400) AS minutes\n" +
+            "name, \n" +
+            "CEIL(ST_DISTANCE(coordinate, (SELECT coordinate FROM houseinfo WHERE apt_code =#{id})) / 400) AS minutes\n" +
             "FROM echarger\n" +
+            "WHERE MBRContains(ST_Buffer((SELECT coordinate FROM houseinfo WHERE apt_code =#{id}), 1000), coordinate)\n" +
             "ORDER BY minutes\n" +
             "LIMIT 1;")
     StoreDto findEchargerNearByHouseId(String id);
