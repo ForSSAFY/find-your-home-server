@@ -1,6 +1,7 @@
 package com.ssafy.findyourhome.dao;
 
 import com.ssafy.findyourhome.domain.User;
+import com.ssafy.findyourhome.dto.user.LoginRes;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,9 @@ public interface UserDao {
 
     @Select("SELECT * FROM `user` WHERE username = #{username}")
     User findByUsername(String username);
+
+    @Select("SELECT username, nickname FROM `user` WHERE username = #{username}")
+    LoginRes findLoginResByUsername(String username);
 
     @Select("SELECT * FROM `user`")
     List<User> findAll();
