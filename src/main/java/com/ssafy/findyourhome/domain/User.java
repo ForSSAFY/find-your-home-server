@@ -20,7 +20,7 @@ public class User implements Serializable {
 
     private String nickname;
     private String email;
-
+    private String role;
     private String password;
 
     private Timestamp joinDate;

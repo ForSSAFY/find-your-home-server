@@ -30,6 +30,7 @@ public class UserService {
                 .email(registerReq.getEmail())
                 .nickname(registerReq.getNickname())
                 .password(passwordEncoder.encode(registerReq.getPassword()))
+                .role("ROLE_USER")
                 .build();
         userDao.insert(user);
     }
