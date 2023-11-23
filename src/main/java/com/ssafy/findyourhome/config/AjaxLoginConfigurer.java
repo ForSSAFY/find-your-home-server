@@ -1,10 +1,9 @@
-package io.security.corespringsecurity.security.configs;
+package com.ssafy.findyourhome.config;
 
-import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
+import com.ssafy.findyourhome.filter.AjaxLoginProcessingFilter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.RememberMeServices;

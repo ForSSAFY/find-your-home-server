@@ -89,17 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
-        return new FormAuthenticationProvider(passwordEncoder());
-    }
-
-    public AccessDeniedHandler accessDeniedHandler() {
-        FormAccessDeniedHandler commonAccessDeniedHandler = new FormAccessDeniedHandler();
-        commonAccessDeniedHandler.setErrorPage("/denied");
-        return commonAccessDeniedHandler;
-    }
-
-    @Bean
     public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
         AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
         ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
